@@ -23,7 +23,7 @@ finally:
 
 #display.lcd_display_string("HALLO NUTZER",1)
 display.lcd_display_string(str(readRFID),1)
-display.lcd_display_string("i love smoli", 2)
+display.lcd_display_string("Hallo Nutzer", 2)
 
 sleep(3)
 display.lcd_clear()
