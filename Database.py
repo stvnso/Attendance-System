@@ -8,19 +8,17 @@ connection = sqlite3.connect('database/attendance-system.db')
 c = connection.cursor()
 
 #c.execute('CREATE TABLE IF NOT EXISTS attendance(id INTEGER PRIMARY KEY AUTOINCREMENT,)')
-c.execute('CREATE TABLE IF NOT EXISTS test(id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT)')
+c.execute("CREATE TABLE attendance(
+  id INTEGER PRIMARY KEY AUTOINCREMENT, 
+  rfid_uid INTEGER NOT NULL, 
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  access_level INTEGER DEFAULT 1 CHECK(access_level IN (1,3)),
+  checked_in INTEGER DEFAULT 0 CHECK(checked_in IN (0,1)),
+  date DATETIME DEFAULT (strftime('%d-%m-%Y', 'now', 'localtime')),
+  check_in_time DATETIME,
+  check_out_time DATETIME ,
+  daily_working_hours real default 8.0,
+  working_time_account Real DEFAULT 0 );")
 
-CREATE TABLE "attendance" (
-	"id"	INTEGER,
-	"rfid-user-id"	INTEGER NOT NULL UNIQUE,
-	"first-name"	NUMERIC NOT NULL,
-	"last-name"	TEXT NOT NULL,
-	"access-level"	INTEGER NOT NULL DEFAULT 1 CHECK(access-level IN(1,3)),
-	"date"	TEXT,
-	"id-checked-in"	INTEGER DEFAULT 0 CHECK(id-checked-in IN(0,1)),
-	"check-in-time"	TEXT,
-	"check-out-time"	TEXT,
-	"working-time-account"	REAL DEFAULT 0,
-	"daily-working-hours"	REAL DEFAULT 8,
-	PRIMARY KEY("id" AUTOINCREMENT)
-);
+ 
