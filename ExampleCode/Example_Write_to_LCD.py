@@ -1,28 +1,16 @@
 #! /usr/bin/env python
-
 import RPi.GPIO as GPIO
-from mfrc522 import SimpleMFRC522
-
 import drivers
 from time import sleep
 
 # Load the driver and set it to "display"
 # If you use something from the driver library use the "display." prefix first
 display = drivers.Lcd()
-reader = SimpleMFRC522()
 
 # Main body of code
 
-try:
-        id, readRFID = reader.read()
-        rfidID = str(id)
-        print(rfidID)
-        print(readRFID)
-finally:
-        GPIO.cleanup()
-
 #display.lcd_display_string("HALLO NUTZER",1)
-display.lcd_display_string(str(readRFID),1)
+display.lcd_display_string("Test",1)
 display.lcd_display_string("Hallo Nutzer", 2)
 
 sleep(3)
