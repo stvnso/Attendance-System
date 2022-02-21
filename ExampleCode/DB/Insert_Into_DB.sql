@@ -18,7 +18,7 @@ VALUES(
   948478422942,
   'Janik',
   'Becker',
-   1,
+   3,
    0,
    strftime('%d-%m-%Y', 'now', 'localtime'),
    time('now','localtime'),

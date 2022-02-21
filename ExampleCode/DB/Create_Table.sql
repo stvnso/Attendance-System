@@ -3,7 +3,7 @@ CREATE TABLE attendance(
   rfid_uid INTEGER NOT NULL, 
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
-  access_level INTEGER DEFAULT 1 CHECK(access_level IN (1,3)),
+  access_level INTEGER DEFAULT 1 CHECK(access_level IN (0,1,2,3)),
   checked_in INTEGER DEFAULT 0 CHECK(checked_in IN (0,1)),
   date DATETIME DEFAULT (strftime('%d-%m-%Y', 'now', 'localtime')),
   check_in_time TIME,
