@@ -15,13 +15,13 @@ INSERT INTO attendance(
     working_time_account)
     
 VALUES(
-  150912046362,
+  948478422942,
   'Janik',
   'Becker',
    1,
    0,
    strftime('%d-%m-%Y', 'now', 'localtime'),
-   strftime('%H:%M:%S', 'now', 'localtime'),
+   time('now','localtime'),
    null,
    8.0,
    0);	

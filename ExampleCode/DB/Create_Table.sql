@@ -6,7 +6,7 @@ CREATE TABLE attendance(
   access_level INTEGER DEFAULT 1 CHECK(access_level IN (1,3)),
   checked_in INTEGER DEFAULT 0 CHECK(checked_in IN (0,1)),
   date DATETIME DEFAULT (strftime('%d-%m-%Y', 'now', 'localtime')),
-  check_in_time TIME DEFAULT ,
-  check_out_time TIME ,
+  check_in_time TIME,
+  check_out_time TIME,
   daily_working_hours real default 8.0,
   working_time_account Real DEFAULT 0 );
