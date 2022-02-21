@@ -15,7 +15,6 @@ def readRFID_fromChip():
             readRFID = str(id)
             print("\n-------------------------------------")
             print("RFID_UID: \t\t" + readRFID)
-            print("Given Second ID: \t\t" + givenID)
             print("-------------------------------------\n")
     finally:
             GPIO.cleanup()
