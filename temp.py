@@ -33,8 +33,11 @@ def check_in():
 
     user = readRFID_fromDatabase(rfid)
     
-    display.lcd_display_string("Hallo "  + user[2] + " " + user[3],1)
+    display.lcd_display_string("Hi "  + user[2] + " " + user[3],1)
     display.lcd_display_string("Kommen: "  + user[7],2)
+    time.sleep(4)
+
+    display.lcd_clear()
     
 
     print("Successfully checked in user: " + user[2] + " " + user[3] )
