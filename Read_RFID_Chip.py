@@ -11,12 +11,15 @@ def readRFID_fromChip():
     # Main body of code
 
     try:
-            id, givenID = reader.read()
+            id,secondID = reader.read()
             readRFID = str(id)
             print("\n-------------------------------------")
-            print("RFID_UID: \t\t" + readRFID)
+            print("RFID_UID:\t" + readRFID)
             print("-------------------------------------\n")
     finally:
             GPIO.cleanup()
 
     return readRFID
+
+#Auskommentieren um einen Chip zu lesen
+#print(readRFID_fromChip())  

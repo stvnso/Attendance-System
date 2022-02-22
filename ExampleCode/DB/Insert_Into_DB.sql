@@ -15,10 +15,10 @@ INSERT INTO attendance(
     working_time_account)
     
 VALUES(
-  948478422942,
-  'Janik',
-  'Becker',
-   3,
+  702208545323,
+  'Eric',
+  'Solo',
+   2,
    0,
    strftime('%d-%m-%Y', 'now', 'localtime'),
    time('now','localtime'),

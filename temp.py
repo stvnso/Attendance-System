@@ -1,24 +1,43 @@
+from dis import dis
 from multiprocessing import connection
 from random import seed
+import drivers
 import sqlite3
+import time
 from Read_RFID_Chip import readRFID_fromChip
+from SelectFromDB import *
 
+display = drivers.Lcd()
 
-readRFID = 948478422942
-# Datenbankverbindung aufbauen + Cursor erstellen
-databaseConnection = sqlite3.connect('database/attendance-system.db')
-dbCursor = databaseConnection.cursor()
-print("\nConnected to SQLite Database: attendance-system \n")
+def check_in():
+    # Datenbankverbindung aufbauen + Cursor erstellen
+    databaseConnection = sqlite3.connect('database/attendance-system.db')
+    print("Datenbank verbunden: attendance")
 
-# Datenbank SELECT Query mit gegebenem Parameter
-# dbCursor.execute(
-#     "SELECT * FROM attendance WHERE rfid_uid=?", (readRFID,))
-# print("Executing SELECT-Query")
+    dbCursor = databaseConnection.cursor()
+    print("Cursor erstellt")
 
-sqlvar = 2
+    print("Bitte Chip anhalten")
+    display.lcd_display_string("Bitte",1)
+    display.lcd_display_string("Chip vorhalten",2)
+    rfid = readRFID_fromChip()
 
-sql_update_query = """Update attendance set checked_in = 1 where id =?""" 
-dbCursor.execute(sql_update_query,(sqlvar,))
-databaseConnection.commit()
-print("Record Updated successfully ")
-dbCursor.close()
+    sql_update_query =  """Update attendance 
+                            SET
+                            date = strftime('%d-%m-%Y', 'now', 'localtime'),
+                            check_in_time = time('now','localtime'),
+                            checked_in = 1
+                            where rfid_uid =?""" 
+    dbCursor.execute(sql_update_query,(rfid,))
+    databaseConnection.commit()
+
+    user = readRFID_fromDatabase(rfid)
+    
+    display.lcd_display_string("Hallo "  + user[2] + " " + user[3],1)
+    display.lcd_display_string("Kommen: "  + user[7],2)
+    
+
+    print("Successfully checked in user: " + user[2] + " " + user[3] )
+    dbCursor.close()
+
+check_in()

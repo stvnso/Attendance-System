@@ -11,7 +11,6 @@ readRFID = None
 
 
 # Initalisierungen
-
 # Load the driver and set it to "display"
 display = drivers.Lcd()
 
@@ -28,7 +27,5 @@ print("\nPrinting to Display..")
 display.lcd_display_string("Hallo",1)
 display.lcd_display_string(first_name + " " + last_name, 2)
 sleep(3)
-
-
 
 display.lcd_clear()
