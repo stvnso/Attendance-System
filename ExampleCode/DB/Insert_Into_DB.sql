@@ -12,6 +12,7 @@ INSERT INTO attendance(
     check_in_time,
     check_out_time,
     daily_working_hours,
+    hours_worked,
     working_time_account)
     
 VALUES(
@@ -24,4 +25,5 @@ VALUES(
    time('now','localtime'),
    null,
    8.0,
+   0,
    0);	
