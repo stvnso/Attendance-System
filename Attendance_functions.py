@@ -162,7 +162,8 @@ def read_user_fromDatabase_by_RFID(rfid_ID):
         print("Check-In-Time: \t\t", user_entry[7])
         print("Check-Out-Time: \t", user_entry[8])
         print("Daily-Working-Hours: \t", user_entry[9])
-        print("Working-Time-Account: \t", user_entry[10])
+        print("Hours-Worked: \t\t", user_entry[10])
+        print("Working-Time-Account: \t", user_entry[11])
         print("---------------------------")
         print("\n")
 
@@ -219,12 +220,19 @@ def check_IN(rfid_ID):
 
 def check_OUT(rfid_ID):
     
+    # sql_query = """UPDATE attendance
+    #                 set 
+    #                 checked_in = 0,
+    #                 check_out_time = strftime('%H:%M:%S', 'now', 'localtime'),
+    #                 working_time_account = round(working_time_account - (daily_working_hours - ((strftime('%s',[check_out_time]) - strftime('%s',[check_in_time])*1.0)/3600)),2)
+    #                 where rfid_uid =?"""
+
     sql_query = """UPDATE attendance
                     set 
                     checked_in = 0,
                     check_out_time = strftime('%H:%M', 'now', 'localtime'),
                     working_time_account = round(working_time_account - (daily_working_hours - ((strftime('%s',[check_out_time]) - strftime('%s',[check_in_time])*1.0)/3600)),2)
-                    where rfid_uid =?;"""
+                    where rfid_uid =?"""
 
     execute_SQL_Query(sql_query,rfid_ID)
 
@@ -250,7 +258,7 @@ def check_OUT(rfid_ID):
  
 
 
-
+#check_OUT("150912046362")
 
 
 
