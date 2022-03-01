@@ -116,10 +116,30 @@ def readRFID_fromChip():
     return rfid_ID
 
 #-------------------------------------------------------------------
+def does_user_exist(rfid_ID):
 
+      # Datenbank SELECT Query mit gegebenem Parameter
+    sql_query = """SELECT * FROM attendance WHERE rfid_uid=?"""
+
+    # Daten im Array speichern
+    selectedData = execute_SQL_Query(sql_query,rfid_ID)
+
+    if len(selectedData) == 1:
+        return True
+    else:
+        print("User does not exist")
+        display.lcd_display_string("Fehler!",1)
+        sleep(2)
+        display.lcd_clear()
+
+        display.lcd_display_string("ID ",1)
+        display.lcd_display_string("Existiert nicht",2)
+        sleep(3)
+        display.lcd_clear()
+        return False
+
+#-------------------------------------------------------------------
 def read_user_fromDatabase_by_RFID(rfid_ID):
-
-    #rfid_ID = readRFID_fromChip()
 
     # Datenbank SELECT Query mit gegebenem Parameter
     sql_query = """SELECT * FROM attendance WHERE rfid_uid=?"""
@@ -158,7 +178,6 @@ def is_user_checked_in(rfid_ID):
         checked_in_status = True
     else:
         checked_in_status = False
-
     
     print("User: " + user[2] + " " + user[3] + " has checked_in status: " + str(checked_in_status))
     
@@ -166,8 +185,6 @@ def is_user_checked_in(rfid_ID):
 #-------------------------------------------------------------------
 
 def check_IN(rfid_ID):
-
-    #rfid_ID = readRFID_fromChip()
 
     sql_query =  """Update attendance 
                             SET
@@ -186,7 +203,7 @@ def check_IN(rfid_ID):
     first_name  = user[2]
     last_name = user[3]
     check_in_time = user[7]
-    working_time_account = user[10]
+    working_time_account = user[11]
 
     print("\nPrinting to Display..")
     display.lcd_display_string("Hallo",1)
@@ -218,7 +235,7 @@ def check_OUT(rfid_ID):
     first_name  = user[2]
     last_name = user[3]
     check_out_time = user[8]
-    working_time_account = user[10]
+    working_time_account = user[11]
 
     print("\nPrinting to Display..")
     display.lcd_display_string("Auf Wiedersehen",1)
@@ -231,7 +248,6 @@ def check_OUT(rfid_ID):
     display.lcd_clear()
 
  
-
 
 
 
