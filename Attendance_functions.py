@@ -189,12 +189,12 @@ def check_IN(rfid_ID):
     working_time_account = user[10]
 
     print("\nPrinting to Display..")
-    display.lcd_display_string("Hi "  + first_name + " " + last_name,1)
-    display.lcd_display_string("Kommen: "  + check_in_time,2)
-    sleep(3)
+    display.lcd_display_string("Hallo",1)
+    display.lcd_display_string(first_name + " " + last_name,2)
+    sleep(2)
     display.lcd_clear()
-    display.lcd_display_string("Arbeitszeitkonto: ",1)
-    display.lcd_display_string(str(working_time_account) + " h",2)
+    display.lcd_display_string("Kommen: "  + str(check_in_time),1)
+    display.lcd_display_string("Konto: "  + str(working_time_account)+ "h",2)
     sleep(3)
     display.lcd_clear()
 
@@ -221,15 +221,16 @@ def check_OUT(rfid_ID):
     working_time_account = user[10]
 
     print("\nPrinting to Display..")
-    display.lcd_display_string("Tschau "  + first_name + " " + last_name,1)
-    display.lcd_display_string("Gehen: "  + str(check_out_time),2)
+    display.lcd_display_string("Auf Wiedersehen",1)
+    display.lcd_display_string(first_name + " " + last_name,2)
+    sleep(2)
+    display.lcd_clear()
+    display.lcd_display_string("Gehen: "  + str(check_out_time),1)
+    display.lcd_display_string("Konto: "  + str(working_time_account)+ "h",2)
     sleep(3)
     display.lcd_clear()
 
-    display.lcd_display_string("Arbeitszeitkonto: ",1)
-    display.lcd_display_string(str(working_time_account) + "h",2)
-    sleep(4)
-    display.lcd_clear()
+ 
 
 
 
