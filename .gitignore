@@ -1,2 +1,3 @@
 #Ignore
-TestFileForNewFunctions.py
+.vscode
+__pycache__
