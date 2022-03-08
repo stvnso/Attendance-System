@@ -1,3 +1,4 @@
+-- Query für CHECK IN
 UPDATE attendance
 set 
 	date = strftime('%d-%m-%Y', 'now', 'localtime'),

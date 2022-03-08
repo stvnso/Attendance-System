@@ -16,9 +16,9 @@ INSERT INTO attendance(
     working_time_account)
     
 VALUES(
-  702208545323,
-  'Eric',
-  'Solo',
+  083208235022,
+  'Test',
+  'Test',
    2,
    0,
    strftime('%d-%m-%Y', 'now', 'localtime'),

@@ -1,3 +1,4 @@
+-- Tabelle erzeugen
 CREATE TABLE attendance(
   id INTEGER PRIMARY KEY AUTOINCREMENT, 
   rfid_uid INTEGER NOT NULL, 

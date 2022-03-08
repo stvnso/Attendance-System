@@ -23,28 +23,6 @@ display = drivers.Lcd()
 #-------------------------------------------------------------------
 
 
-#-------------------------------------------------------------------
-
-
-# DATABASE CONNECTION
-
-# connect to database
-# try:
-#         # Datenbankverbindung aufbauen + Cursor erstellen
-#         database_Attendance = sqlite3.connect('database/attendance-system.db')
-#         print("Database connection successfull")
-
-#         dbCursor = database_Attendance.cursor()
-#         print("Created Cursor for Database")
-
-# except sqlite3.Error as error:
-#         print("Failed to connect to Database", error)
-
-
-
-#-------------------------------------------------------------------
-
-
 # FUNCTIONS
 
 def execute_SQL_Query(sql_query,rfid_ID):
@@ -64,31 +42,6 @@ def execute_SQL_Query(sql_query,rfid_ID):
     except sqlite3.Error as error:
         print("Failed to connect to Database", error)
 
-
-def create_db_connection():
-    try:
-        # Datenbankverbindung aufbauen + Cursor erstellen
-        database_Attendance = sqlite3.connect('database/attendance-system.db')
-        print("Database connection successfull")
-
-        return database_Attendance
-
-    except sqlite3.Error as error:
-        print("Failed to connect to Database", error)
-
-
-def create_db_cursor(database):
-    dbCursor = database.cursor()
-    return dbCursor
-
-
-def close_db_connection(database,dbCursor):
-
-    database.close()
-    print("Closed Database connection")
-
-    dbCursor.close()
-    print("Closed Database Cursor")
 
 #-------------------------------------------------------------------
 
@@ -191,6 +144,7 @@ def check_IN(rfid_ID):
                             SET
                             date = strftime('%d-%m-%Y', 'now', 'localtime'),
                             check_in_time = strftime('%H:%M', 'now', 'localtime'),
+                            check_out_time = null,
                             checked_in = 1
                             where rfid_uid =?""" 
   
@@ -223,18 +177,23 @@ def check_OUT(rfid_ID):
     # sql_query = """UPDATE attendance
     #                 set 
     #                 checked_in = 0,
-    #                 check_out_time = strftime('%H:%M:%S', 'now', 'localtime'),
+    #                 check_out_time = strftime('%H:%M', 'now', 'localtime'),
     #                 working_time_account = round(working_time_account - (daily_working_hours - ((strftime('%s',[check_out_time]) - strftime('%s',[check_in_time])*1.0)/3600)),2)
     #                 where rfid_uid =?"""
-
     sql_query = """UPDATE attendance
                     set 
                     checked_in = 0,
                     check_out_time = strftime('%H:%M', 'now', 'localtime'),
+                    where rfid_uid =?;""" 
+    sql_query2 = """
+                    UPDATE attendance
+                    set 
                     working_time_account = round(working_time_account - (daily_working_hours - ((strftime('%s',[check_out_time]) - strftime('%s',[check_in_time])*1.0)/3600)),2)
-                    where rfid_uid =?"""
+                    where rfid_uid =?; 
+                    """
 
     execute_SQL_Query(sql_query,rfid_ID)
+    execute_SQL_Query(sql_query2,rfid_ID)
 
     user = read_user_fromDatabase_by_RFID(rfid_ID)
 
