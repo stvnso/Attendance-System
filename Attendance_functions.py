@@ -69,6 +69,8 @@ def readRFID_fromChip():
     return rfid_ID
 
 #-------------------------------------------------------------------
+
+# checks if user exists in database
 def does_user_exist(rfid_ID):
 
       # Datenbank SELECT Query mit gegebenem Parameter
@@ -92,6 +94,8 @@ def does_user_exist(rfid_ID):
         return False
 
 #-------------------------------------------------------------------
+
+# reads a user from Database with given RFID ID
 def read_user_fromDatabase_by_RFID(rfid_ID):
 
     # Datenbank SELECT Query mit gegebenem Parameter
@@ -123,6 +127,7 @@ def read_user_fromDatabase_by_RFID(rfid_ID):
         return user_entry
 #-------------------------------------------------------------------
 
+#checks if user is currently checked in
 def is_user_checked_in(rfid_ID):
 
     user = read_user_fromDatabase_by_RFID(rfid_ID)
@@ -138,13 +143,13 @@ def is_user_checked_in(rfid_ID):
     return checked_in_status
 #-------------------------------------------------------------------
 
+#checks user in
 def check_IN(rfid_ID):
 
     sql_query =  """Update attendance 
                             SET
                             date = strftime('%d-%m-%Y', 'now', 'localtime'),
-                            check_in_time = strftime('%H:%M', 'now', 'localtime'),
-                            check_out_time = null,
+                            check_in_time = strftime('%H:%M','now','localtime'),
                             checked_in = 1
                             where rfid_uid =?""" 
   
@@ -172,28 +177,23 @@ def check_IN(rfid_ID):
 
 #-------------------------------------------------------------------
 
+#checks user out
 def check_OUT(rfid_ID):
     
-    # sql_query = """UPDATE attendance
-    #                 set 
-    #                 checked_in = 0,
-    #                 check_out_time = strftime('%H:%M', 'now', 'localtime'),
-    #                 working_time_account = round(working_time_account - (daily_working_hours - ((strftime('%s',[check_out_time]) - strftime('%s',[check_in_time])*1.0)/3600)),2)
-    #                 where rfid_uid =?"""
     sql_query = """UPDATE attendance
-                    set 
-                    checked_in = 0,
-                    check_out_time = strftime('%H:%M', 'now', 'localtime'),
-                    where rfid_uid =?;""" 
-    sql_query2 = """
-                    UPDATE attendance
-                    set 
-                    working_time_account = round(working_time_account - (daily_working_hours - ((strftime('%s',[check_out_time]) - strftime('%s',[check_in_time])*1.0)/3600)),2)
-                    where rfid_uid =?; 
-                    """
+                    SET 
+                    check_out_time = strftime('%H:%M','now','localtime'),
+                    checked_in = 0
+                    where rfid_uid =?""" 
 
     execute_SQL_Query(sql_query,rfid_ID)
-    execute_SQL_Query(sql_query2,rfid_ID)
+
+    sql_query_calc = """UPDATE attendance
+                    SET 
+                    working_time_account = round(working_time_account - (daily_working_hours - ((strftime('%s',[check_out_time]) - strftime('%s',[check_in_time])*1.0)/3600)),2)
+                    where rfid_uid =?"""
+
+    execute_SQL_Query(sql_query_calc,rfid_ID)
 
     user = read_user_fromDatabase_by_RFID(rfid_ID)
 
@@ -214,39 +214,3 @@ def check_OUT(rfid_ID):
     sleep(3)
     display.lcd_clear()
 
- 
-
-
-#check_OUT("150912046362")
-
-
-
-
-
-
-
-
-
-
-
-
-#--------------------OLD / TEMP FUNCTIONS-----------------------------------------------
-
-""" def create_db_Connection():
-        print("blbb")
-
-        # connect to database
-
-        databaseConnection = sqlite3.connect('database/attendance-system.db')
-        print("Database connection successfull")
-        return databaseConnection
-
-
-def create_db_Cursor(database = create_db_Connection()):       
-
-        dbCursor = database.cursor()
-        print("\nCreated Database Cursor \n")
-
-        return dbCursor """
-
-         
