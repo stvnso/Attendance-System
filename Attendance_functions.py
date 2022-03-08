@@ -11,14 +11,14 @@ from random import seed
 import sqlite3
 
 #lcd
-import drivers
+import lcd_drivers
 
 #misc
 from time import sleep
 #-------------------------------------------------------------------
 
 #VARIABLES
-display = drivers.Lcd()
+display = lcd_drivers.Lcd()
 
 #-------------------------------------------------------------------
 

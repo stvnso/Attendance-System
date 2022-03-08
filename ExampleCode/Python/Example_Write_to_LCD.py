@@ -1,11 +1,11 @@
 #! /usr/bin/env python
 import RPi.GPIO as GPIO
-import drivers
+import lcd_drivers
 from time import sleep
 
 # Load the driver and set it to "display"
 # If you use something from the driver library use the "display." prefix first
-display = drivers.Lcd()
+display = lcd_drivers.Lcd()
 
 # Main body of code
 
