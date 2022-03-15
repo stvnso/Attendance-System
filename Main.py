@@ -1,9 +1,5 @@
 #/usr/bin/env python
 
-from ast import While
-import RPi.GPIO as GPIO
-from numpy import False_
-import lcd_drivers
 from time import sleep
 from Attendance_functions import *
 
