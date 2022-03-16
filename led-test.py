@@ -2,66 +2,32 @@
 from gpiozero import Button, LED
 import lcd_drivers
 from signal import pause
+from time import sleep
 
 display = lcd_drivers.Lcd()
 
-# Initialisierung von GPIO27 als Button (Eingang)
-button = Button(27)
 
-# Initialisierung von GPIO17 als LED (Ausgang)
+#button = Button(27)
+
+
 led = LED(12)
 
 
-button.wait_for_press()
+btn = Button(27)
 
-button.when_pressed = led.on()
-print(str(led.value))
+led.on()
+display.lcd_display_string("Wait for press",1)
 
-button.when_released = led.off()
-print(str(led.value))
+btn.wait_for_press()
 
-
-
+display.lcd_clear()
 
 
-#button.when_released = led.off
+if btn.is_pressed:
+    print("button is pressed")
+    led.off()
 
-pause()
-
-
-# # Warten auf Druck auf Button
-# button.wait_for_press()
-
-# def btnpress():
-#     print("button pressed")
-#     led.on()
-
-# button.value()
-
-# # Text-Ausgabe
-# button.when_pressed = btnpress()
-
-# button.when_released  = led.off
-
-
-# # while True:
-
-# #     # Wenn der Button gedrückt wird
-# #     button.when_pressed = led.on()
-
-
-#     led_HighLow = led.value
-
-#     if led_HighLow == 1:
-#         display.lcd_clear()
-#         display.lcd_display_string("Led ON",1)
-#     else:
-#         display.lcd_clear()
-#         display.lcd_display_string("Led OFF",1)
-
-#     #print(str(led_HighLow))
-
-   
-   
-
-
+sleep(2)
+led.on()
+sleep(2)
+led.off()
