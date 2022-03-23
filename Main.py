@@ -1,9 +1,9 @@
 #/usr/bin/env python
 
+import sys
 from time import sleep
 from Attendance_functions import *
-
-
+from Alarm_system import *
 
 while True:
     rfid_ID = readRFID_fromChip()
@@ -17,6 +17,12 @@ while True:
         check_OUT(rfid_ID)
     elif check_user == False:
         check_IN(rfid_ID)
+    
+    # if are_users_checked_in() == False:
+    #     print("Keiner mehr da")
+        
+    #     main_function()
+    #     exit()
 
 
 

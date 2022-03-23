@@ -1,9 +1,11 @@
 #imports
 
 #reader
+from curses.ascii import isdigit
 from re import S
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
+from Alarm_system import *
 
 #database
 from multiprocessing import connection
@@ -43,6 +45,24 @@ def execute_SQL_Query(sql_query,rfid_ID):
         print("Failed to connect to Database", error)
 
 
+def SQL_Query(sql_query):
+    try:
+        # Datenbankverbindung aufbauen + Cursor erstellen
+        database_Attendance = sqlite3.connect('database/attendance-system.db')
+       # print("Database connection successfull")
+        dbCursor = database_Attendance.cursor()
+
+        dbCursor.execute(sql_query)
+        database_Attendance.commit()
+
+        sql_query_result = dbCursor.fetchall()
+
+        return sql_query_result
+
+    except sqlite3.Error as error:
+        print("Failed to connect to Database", error)
+
+
 #-------------------------------------------------------------------
 
 
@@ -68,6 +88,29 @@ def readRFID_fromChip():
 
     return rfid_ID
 
+#-------------------------------------------------------------------
+def are_users_checked_in():
+
+    sql_query = """SELECT checked_in FROM attendance"""
+    selectedData = SQL_Query(sql_query)
+
+    for i in selectedData:
+
+        entry = int(str(i).lstrip("(").rstrip(",)"))
+
+        if entry > 0:
+            print("Worker in the building")
+            return True
+
+    print("All workers gone")
+    display.lcd_clear()
+    sleep(1)
+    display.lcd_display_string("All workers gone", 1)
+    sleep(1)
+    display.lcd_clear()
+    
+    return False        
+        
 #-------------------------------------------------------------------
 
 # checks if user exists in database
@@ -138,7 +181,7 @@ def is_user_checked_in(rfid_ID):
     else:
         checked_in_status = False
     
-    print("User: " + user[2] + " " + user[3] + " has checked_in status: " + str(checked_in_status))
+    #print("User: " + user[2] + " " + user[3] + " has checked_in status: " + str(checked_in_status))
     
     return checked_in_status
 #-------------------------------------------------------------------
@@ -179,38 +222,44 @@ def check_IN(rfid_ID):
 
 #checks user out
 def check_OUT(rfid_ID):
-    
+
     sql_query = """UPDATE attendance
                     SET 
                     check_out_time = strftime('%H:%M','now','localtime'),
                     checked_in = 0
-                    where rfid_uid =?""" 
+                    where rfid_uid =?"""
 
-    execute_SQL_Query(sql_query,rfid_ID)
+    execute_SQL_Query(sql_query, rfid_ID)
 
     sql_query_calc = """UPDATE attendance
                     SET 
                     working_time_account = round(working_time_account - (daily_working_hours - ((strftime('%s',[check_out_time]) - strftime('%s',[check_in_time])*1.0)/3600)),2)
                     where rfid_uid =?"""
 
-    execute_SQL_Query(sql_query_calc,rfid_ID)
+    execute_SQL_Query(sql_query_calc, rfid_ID)
 
     user = read_user_fromDatabase_by_RFID(rfid_ID)
 
-    print("Successfully checked out user: " + user[2] + " " + user[3] )
+    print("Successfully checked out user: " + user[2] + " " + user[3])
 
-    first_name  = user[2]
+    first_name = user[2]
     last_name = user[3]
     check_out_time = user[8]
     working_time_account = user[11]
 
     print("\nPrinting to Display..")
-    display.lcd_display_string("Auf Wiedersehen",1)
-    display.lcd_display_string(first_name + " " + last_name,2)
+    display.lcd_display_string("Auf Wiedersehen", 1)
+    display.lcd_display_string(first_name + " " + last_name, 2)
     sleep(2)
     display.lcd_clear()
-    display.lcd_display_string("Gehen: "  + str(check_out_time),1)
-    display.lcd_display_string("Konto: "  + str(working_time_account)+ "h",2)
+    display.lcd_display_string("Gehen: " + str(check_out_time), 1)
+    display.lcd_display_string("Konto: " + str(working_time_account) + "h", 2)
     sleep(3)
     display.lcd_clear()
+
+    if are_users_checked_in() == False:
+        print("Keiner mehr da")
+
+        main_function()
+        exit()
 
