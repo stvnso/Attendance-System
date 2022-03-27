@@ -1,28 +1,20 @@
 #imports
 
 #reader
-from curses.ascii import isdigit
-from re import S
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
-from Alarm_system import *
+from Alarm_System_Functions import *
+from Alarm_System_Main import *
 
 #database
-from multiprocessing import connection
-from random import seed
 import sqlite3
 
 #lcd
 import lcd_drivers
+display = lcd_drivers.Lcd()
 
 #misc
 from time import sleep
-#-------------------------------------------------------------------
-
-#VARIABLES
-display = lcd_drivers.Lcd()
-
-#-------------------------------------------------------------------
 
 
 # FUNCTIONS
@@ -104,7 +96,6 @@ def are_users_checked_in():
 
     print("All workers gone")
     display.lcd_clear()
-    sleep(1)
     display.lcd_display_string("All workers gone", 1)
     sleep(1)
     display.lcd_clear()
@@ -258,8 +249,6 @@ def check_OUT(rfid_ID):
     display.lcd_clear()
 
     if are_users_checked_in() == False:
-        print("Keiner mehr da")
-
         main_function()
-        exit()
+        
 

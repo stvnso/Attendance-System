@@ -3,7 +3,7 @@
 import sys
 from time import sleep
 from Attendance_System_Functions import *
-from Alarm_system import *
+from Alarm_System_Main import *
 
 while True:
     rfid_ID = readRFID_fromChip()

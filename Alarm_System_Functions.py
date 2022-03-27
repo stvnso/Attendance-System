@@ -8,7 +8,7 @@ def arming_alarm_system():
     display = lcd_drivers.Lcd()
     display.lcd_clear()
 
-    sleep(2)
+    sleep(1)
     display.lcd_display_string("Starting", 1)
     display.lcd_display_string("Alarm System..", 2)
     sleep(2)
@@ -34,5 +34,6 @@ def arming_alarm_system():
     display.lcd_clear()
     display.lcd_display_string("System", 1)
     display.lcd_display_string("ARMED!!", 2)
+    sleep(1)
 
 
