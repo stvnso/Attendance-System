@@ -2,7 +2,7 @@
 
 import sys
 from time import sleep
-from Attendance_functions import *
+from Attendance_System_Functions import *
 from Alarm_system import *
 
 while True:
