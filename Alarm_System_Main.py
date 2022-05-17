@@ -11,11 +11,11 @@ def main_function():
 # --------------------------------
     display = lcd_drivers.Lcd()
 
-    pir_room1 = MotionSensor(18)
-    led_room1 = LED(12)
+    pir_room1 = MotionSensor(20)
+    led_room1 = LED(26)
 
-    pir_room2 = MotionSensor(23)
-    led_room2 = LED(21)
+    pir_room2 = MotionSensor(21)
+    led_room2 = LED(26)
 
     # -------------------------------
 

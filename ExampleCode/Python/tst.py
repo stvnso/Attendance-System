@@ -1,21 +1,15 @@
-#!/usr/bin/env python
-
-import RPi.GPIO as GPIO
-from mfrc522 import SimpleMFRC522
-
-reader = SimpleMFRC522()
+from gpiozero import MotionSensor, LED, Button
+from signal import pause
+from time import sleep
 
 
+led1 = LED(17)
 
-try:
-        id, text = reader.read()
-        print(id)
-        print(text)
-finally:
-        GPIO.cleanup()
-    
+while True:
+	print("start")
+	led1.on()
+	sleep(1)
+	led1.off()
+	sleep(1)
 
-GPIO.cleanup()
 
-150912046362	
-948478422942
