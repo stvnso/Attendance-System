@@ -11,7 +11,7 @@ display = lcd_drivers.Lcd()
 siren = LED(12)
 
 # ROOM1
-room1_GasSensor = MotionSensor(16)
+room1_GasSensor = MotionSensor(1)
 room1_WindowSwitch = Button(23)
 room1_LED = LED(13)
 
@@ -41,7 +41,7 @@ def room1_Window():
 
     sleep(1)
     display.lcd_clear()
-
+    
 
 def room1_Gas():
     display.lcd_clear()
@@ -108,7 +108,6 @@ def Alarm_Main():
     # ROOM3
     room3_MotionSensor.when_motion = room3_Motion
 
-
     pause()
 
-Alarm_Main()
+# Alarm_Main()
