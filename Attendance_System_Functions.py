@@ -3,7 +3,6 @@
 #reader
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
-from Alarm_System_Functions import *
 from Alarm import *
 
 #database
@@ -249,6 +248,7 @@ def check_OUT(rfid_ID):
     display.lcd_clear()
 
     if are_users_checked_in() == False:
-        Alarm_Main()
+        # Alarm_Main()
+        print("Alle weg")
         
 
