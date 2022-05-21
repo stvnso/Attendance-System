@@ -2,7 +2,6 @@
 
 from time import sleep
 from Attendance_System_Functions import *
-from Alarm_System_Main import *
 
 def attendance_Main():
 

@@ -4,7 +4,7 @@
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 from Alarm_System_Functions import *
-from Alarm_System_Main import *
+from Alarm import *
 
 #database
 import sqlite3
@@ -249,6 +249,6 @@ def check_OUT(rfid_ID):
     display.lcd_clear()
 
     if are_users_checked_in() == False:
-        main_function()
+        Alarm_Main()
         
 
