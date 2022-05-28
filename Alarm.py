@@ -107,7 +107,6 @@ def Alarm_Main():
 
     # ROOM3
     room3_MotionSensor.when_motion = room3_Motion
-
     pause()
 
-# Alarm_Main()
+#Alarm_Main()

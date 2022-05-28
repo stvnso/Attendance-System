@@ -66,15 +66,15 @@ def readRFID_fromChip():
     display.lcd_display_string("Chip vorhalten",2)
     print("Reading Chip..")
 
-    try:
-            id,secondId = reader.read()
-            rfid_ID = str(id)
-            print("\n-------------------------------------")
-            print("RFID_UID:\t" + rfid_ID)
-            print("-------------------------------------\n")
-            display.lcd_clear()
-    finally:
-            GPIO.cleanup()
+
+    id,secondId = reader.read()
+    rfid_ID = str(id)
+    print("\n-------------------------------------")
+    print("RFID_UID:\t" + rfid_ID)
+    print("-------------------------------------\n")
+    display.lcd_clear()
+    # finally:
+    #         #GPIO.cleanup()
 
 
     return rfid_ID
@@ -248,7 +248,7 @@ def check_OUT(rfid_ID):
     display.lcd_clear()
 
     if are_users_checked_in() == False:
-        # Alarm_Main()
         print("Alle weg")
+        Alarm_Main()
         
 

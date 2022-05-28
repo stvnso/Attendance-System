@@ -2,6 +2,7 @@
 
 from time import sleep
 from Attendance_System_Functions import *
+import RPi.GPIO as GPIO  
 
 def attendance_Main():
 
@@ -17,8 +18,6 @@ def attendance_Main():
             check_OUT(rfid_ID)
         elif check_user == False:
             check_IN(rfid_ID)
-        
-
 
 attendance_Main()
 
