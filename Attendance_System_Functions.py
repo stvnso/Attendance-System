@@ -64,7 +64,7 @@ def readRFID_fromChip():
 
     display.lcd_display_string("Bitte",1)
     display.lcd_display_string("Chip vorhalten",2)
-    print("Waiting for Chip..")
+    print("\n\nWaiting for Chip..")
 
 
     id,secondId = reader.read()
