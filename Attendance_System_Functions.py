@@ -64,7 +64,7 @@ def readRFID_fromChip():
 
     display.lcd_display_string("Bitte",1)
     display.lcd_display_string("Chip vorhalten",2)
-    print("Reading Chip..")
+    print("Waiting for Chip..")
 
 
     id,secondId = reader.read()
@@ -73,8 +73,7 @@ def readRFID_fromChip():
     print("RFID_UID:\t" + rfid_ID)
     print("-------------------------------------\n")
     display.lcd_clear()
-    # finally:
-    #         #GPIO.cleanup()
+    
 
 
     return rfid_ID
@@ -95,8 +94,9 @@ def are_users_checked_in():
 
     print("All workers gone")
     display.lcd_clear()
-    display.lcd_display_string("All workers gone", 1)
-    sleep(1)
+    display.lcd_display_string("Alle Mitarbeiter", 1)
+    display.lcd_display_string("ausgestempelt", 2)
+    sleep(2)
     display.lcd_clear()
     
     return False        
@@ -128,10 +128,8 @@ def does_user_exist(rfid_ID):
 
 #-------------------------------------------------------------------
 
-# reads a user from Database with given RFID ID
-def read_user_fromDatabase_by_RFID(rfid_ID):
-
-    # Datenbank SELECT Query mit gegebenem Parameter
+def print_user(rfid_ID):
+      # Datenbank SELECT Query mit gegebenem Parameter
     sql_query = """SELECT * FROM attendance WHERE rfid_uid=?"""
 
     # Daten im Array speichern
@@ -156,6 +154,32 @@ def read_user_fromDatabase_by_RFID(rfid_ID):
         print("Working-Time-Account: \t", user_entry[11])
         print("---------------------------")
         print("\n")
+
+        
+
+# reads a user from Database with given RFID ID
+def read_user_fromDatabase_by_RFID(rfid_ID):
+
+    # Datenbank SELECT Query mit gegebenem Parameter
+    sql_query = """SELECT * FROM attendance WHERE rfid_uid=?"""
+
+    # Daten im Array speichern
+    selectedData = execute_SQL_Query(sql_query, rfid_ID)
+  
+    # Über Array iterieren und Einträge ausgeben
+    for user_entry in selectedData:
+        user_entry[0] #ID
+        user_entry[1] #RFID
+        user_entry[2] #First name
+        user_entry[3] #last name
+        user_entry[4] #access level
+        user_entry[5] #checked in 
+        user_entry[6] #Date
+        user_entry[7] #check in time
+        user_entry[8] #check out time
+        user_entry[9] #daily working hours
+        user_entry[10] #hours worked
+        user_entry[11] #working time account
 
         return user_entry
 #-------------------------------------------------------------------
@@ -188,7 +212,7 @@ def check_IN(rfid_ID):
   
     execute_SQL_Query(sql_query,rfid_ID)
 
-    
+    print_user(rfid_ID)
     user = read_user_fromDatabase_by_RFID(rfid_ID)
 
     print("Successfully checked in user: " + user[2] + " " + user[3] )
