@@ -155,7 +155,7 @@ def print_user(rfid_ID):
         print("---------------------------")
         print("\n")
 
-        
+#-------------------------------------------------------------------        
 
 # reads a user from Database with given RFID ID
 def read_user_fromDatabase_by_RFID(rfid_ID):
@@ -272,7 +272,7 @@ def check_OUT(rfid_ID):
     display.lcd_clear()
 
     if are_users_checked_in() == False:
-        print("Alle weg")
+        #print("Alle weg")
         Alarm_Main()
         
 
